@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Used Car Marketplace</title>
+    <link rel="stylesheet" type="text/css" href="/styles/main.css" />
+  </head>
+  <body>
+    <h1>Used Car Marketplace 🚗</h1>
+    <form action="/cardetails" method="POST" class="buttons">
+      <button type="submit" value="Toyota" name="choice">🚘</button>
+      <button type="submit" value="Honda" name="choice">🚗</button>
+      <button type="submit" value="BMW" name="choice">🚙</button>
+    </form>
+    <div id="carContainer">
+      <% if (locals.car) { %>
+      <div class="car">
+        <h2>
+          <%= locals.car.make %> <%= locals.car.model %> (<%= locals.car.year
+          %>)
+        </h2>
+        <p><strong>Price:</strong> $<%= locals.car.price %></p>
+        <p><strong>Mileage:</strong> <%= locals.car.mileage %> miles</p>
+        <% if (locals.car.engine) { %>
+        <p>
+          <strong>Engine:</strong> <%= locals.car.engine.displacement %> <%=
+          locals.car.engine.type %>, <%= locals.car.engine.horsepower %> HP
+        </p>
+        <% } %>
+        <p><strong>Transmission:</strong> <%= locals.car.transmission %></p>
+        <p><strong>Color:</strong> <%= locals.car.color %></p>
+        <p><strong>Interior Color:</strong> <%= locals.car.interior_color %></p>
+        <h3>Features:</h3>
+        <ul class="features-list">
+          <% if (locals.car.features && locals.car.features.length > 0) { %> <%
+          locals.car.features.forEach(feature => { %>
+          <li><%= feature %></li>
+          <% }) %> <% } else { %>
+          <li>No features available</li>
+          <% } %>
+        </ul>
+        <h3>Owner History:</h3>
+        <ul class="owner-history-list">
+          <% if (locals.car.owner_history &&
+          Array.isArray(locals.car.owner_history)) { %> <%
+          locals.car.owner_history.forEach(history => { %>
+          <li>
+            Purchased by <%= history.name %> on <%= history.purchase_date %> for
+            $<%= history.price %>
+          </li>
+          <% }) %> <% } else { %>
+          <li>No owner history available</li>
+          <% } %>
+        </ul>
+      </div>
+      <% } else { %>
+      <p>No car available.</p>
+      <% } %>
+    </div>
+  </body>
+</html>
